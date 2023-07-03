@@ -13,7 +13,8 @@ const JWT_SECRET = "f6?.èrtg+/--1>z%";
 router.post("/createuser",
     body("name", "Name field cannot be empty.").notEmpty(),
     body("name", "Name field must be at least 3 characters.").isLength({ min: 3 }),
-    body("email", "Email field cannot be empty and have to be in correct format.").notEmpty().isEmail(),
+    body("email", "Email field cannot be empty.").notEmpty(),
+    body("email", "Email field have to be in correct format.").isEmail(),
     body("password", "Password field must be at least 5 characters.").isLength({ min: 5 }),
     async (req, res) => {
         const result = validationResult(req);
@@ -81,8 +82,9 @@ router.post("/createuser",
 
 //ROUTE 2: Authenticate a user using POST: "/api/auth/login". No login required.
 router.post("/login",
-    body("email", "Email field cannot be empty and have to be in correct format.").notEmpty().isEmail(),
-    body("password", "Password field cannot be empty.").exists(),
+    body("email", "Email field cannot be empty.").notEmpty(),
+    body("email", "Email field have to be in correct format.").isEmail(),
+    body("password", "Password field cannot be empty.").notEmpty(),
     async (req, res) => {
         const result = validationResult(req);
         if (result.isEmpty()) {

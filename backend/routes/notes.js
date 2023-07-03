@@ -62,6 +62,8 @@ router.post("/addnote",
 
 //ROUTE 3: Update a note for loggedin user using PUT: "/api/notes/updatenote". Login required.
 router.put("/updatenote/:id",
+    body("note.title", "Title field must be at least 3 characters.").isLength({ min: 3 }),
+    body("note.description", "Description field must be at least 5 characters.").isLength({ min: 5 }),
     fetchuser, async (req, res) => {
         try {
             const result = validationResult(req);
